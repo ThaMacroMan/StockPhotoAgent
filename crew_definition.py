@@ -129,19 +129,25 @@ class PhotoSearchCrew:
                 Task(
                     description=(
                         'Take the curated selection of 5 photos and format it into a clear, well-organized markdown presentation. '
-                        'For each photo include: Photo description (from the search results), Photo ID, photographer name as markdown link, '
+                        'For each photo include: BOTH markdown image syntax AND HTML img tag for the thumbnail using the Thumbnail URL from the search results. '
+                        'Format: ![Photo description](thumbnail_url) AND <img src="thumbnail_url" alt="Photo description" width="350" /> '
+                        'Then include: Photo description, Photo ID, photographer name as markdown link, '
                         'dimensions, Pexels page as markdown link, and Original download link as markdown link. '
-                        '\n\nCRITICAL: Preserve the EXACT markdown link format from the curator. Copy and paste the markdown '
-                        'links EXACTLY as they are - do NOT modify, shorten, or recreate them. The format should be '
-                        '[Link Text](URL) for all links. '
+                        '\n\nCRITICAL: Include BOTH formats for each image: '
+                        '1) Markdown: ![alt text](thumbnail_url) '
+                        '2) HTML: <img src="thumbnail_url" alt="alt text" width="350" /> '
+                        'Preserve the EXACT URLs from the curator - do NOT modify, shorten, or recreate them. '
                         '\n\nInclude a note about attribution requirements: "Photos provided by Pexels. '
                         'Please provide attribution by linking to the photographer\'s Pexels profile."'
                     ),
                     expected_output=(
-                        'A professionally formatted markdown list of the 5 selected stock photos with complete download information. '
-                        'Each photo must include: number, photo description, Photo ID, photographer name as markdown link, '
-                        'dimensions, Pexels page as markdown link, and Original download link as markdown link '
-                        'in the format [Link Text](URL). Copy the markdown links EXACTLY from the curator. '
+                        'A professionally formatted markdown list of the 5 selected stock photos with image thumbnails in BOTH markdown and HTML formats. '
+                        'Each photo must include: '
+                        '1) Markdown image: ![description](thumbnail_url) '
+                        '2) HTML image: <img src="thumbnail_url" alt="description" width="350" /> '
+                        '3) Number, photo description, Photo ID, photographer name as markdown link, '
+                        'dimensions, Pexels page as markdown link, and Original download link as markdown link. '
+                        'Use the Thumbnail URL from the search results for both image formats. Copy all URLs EXACTLY from the curator. '
                         'Include attribution note at the end.'
                     ),
                     agent=results_formatter

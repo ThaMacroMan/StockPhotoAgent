@@ -74,12 +74,13 @@ class PexelsSearchTool(BaseTool):
             for i, photo in enumerate(photos, 1):
                 # Include alt description for better selection decisions
                 alt_text = photo.get('alt', 'No description available')
-                # Concise format: Description, ID, photographer, dimensions, Pexels page, and Original URL
+                # Concise format: Description, ID, photographer, dimensions, Pexels page, thumbnail URL, and Original URL
                 result += f"{i}. Description: {alt_text} | "
                 result += f"Photo ID: {photo['id']} | "
                 result += f"Photographer: [{photo['photographer']}]({photo['photographer_url']}) | "
                 result += f"{photo['width']}x{photo['height']} | "
                 result += f"[Pexels]({photo['url']}) | "
+                result += f"Thumbnail: {photo['src']['medium']} | "
                 result += f"[Original]({photo['src']['original']})\n"
             
             return result
