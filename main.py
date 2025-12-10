@@ -337,7 +337,7 @@ async def get_agent_metadata():
     return {
         "agentIdentifier": agent_identifier,
         "name": "Stock Photo Search Agent",
-        "description": "AI-powered agent that intelligently searches and curates high-quality stock photos from Pexels. Get perfectly matched photos for your projects with full attribution, multiple size options, and professional curation.",
+        "description": "AI-powered agent that intelligently searches and curates the top 5 highest-quality stock photos from Pexels. Get perfectly matched photos for your projects with markdown-formatted links, full attribution, multiple size options, and professional curation.",
         "version": "1.0.0",
         "category": "Media & Design",
         "tags": ["stock-photos", "pexels", "image-search", "design", "photography", "media"],
@@ -348,10 +348,11 @@ async def get_agent_metadata():
         },
         "capabilities": [
             "Intelligent photo search using natural language",
-            "Curated selection of 8-12 high-quality photos",
-            "Multiple image sizes (original, large, medium, small)",
+            "Curated selection of top 5 highest-quality photos",
+            "Original high-resolution photo downloads",
             "Full photographer attribution and Pexels links",
-            "Optimized search query generation"
+            "Optimized search query generation",
+            "Markdown-formatted links for easy integration"
         ],
         "inputSchema": {
             "type": "object",
@@ -368,7 +369,7 @@ async def get_agent_metadata():
             },
             "required": ["prompt"]
         },
-        "outputFormat": "JSON with curated photo collection including URLs, photographer info, and attribution",
+        "outputFormat": "Markdown-formatted list of 5 curated photos with Pexels page links, original photo download links, photographer info, and attribution",
         "averageProcessingTime": "30-60 seconds",
         "supportedNetworks": ["PREPROD", "MAINNET"],
         "contact": {

@@ -78,10 +78,10 @@ class PhotoSearchCrew:
             goal='Format and present the selected photos in a clear, organized, and actionable way',
             backstory=(
                 'You are a presentation specialist who knows how to organize photo results '
-                'in a user-friendly format with all necessary information including proper attribution, '
-                'download links, and usage guidelines. You understand that URLs must be preserved '
-                'EXACTLY as provided - you never create, modify, or shorten URLs. You copy-paste '
-                'URLs verbatim to ensure they work correctly for users.'
+                'in a user-friendly markdown format with all necessary information including proper attribution, '
+                'download links, and usage guidelines. You understand that markdown links must be preserved '
+                'EXACTLY as provided in the format [Link Text](URL). You never create, modify, or shorten '
+                'markdown links. You copy-paste them verbatim to ensure they work correctly for users.'
             ),
             llm=self.llm,
             verbose=self.verbose
@@ -108,37 +108,41 @@ class PhotoSearchCrew:
                 Task(
                     description=(
                         'Using the search queries from the analyst, search Pexels for stock photos. '
-                        'For each query, request 10-15 photos. Review all results and select the TOP 8-12 '
-                        'photos that best match the user\'s original request: "{prompt}". '
-                        'Consider photo quality, relevance, composition, and variety in your selection. '
+                        'For each query, request 15-18 photos to ensure a wide selection while keeping data manageable. '
+                        'Review all results and select the TOP 5 BEST photos that best match the user\'s original request: "{prompt}". '
+                        'Use the photo descriptions (alt text) provided in the search results to understand what each photo '
+                        'actually contains. Be highly selective - only choose the absolute best photos based on: '
+                        '1) How well the description matches the user\'s request, 2) Quality (higher resolution preferred), '
+                        '3) Relevance to the original prompt, 4) Composition and variety. '
                         '\n\nIMPORTANT: You must copy the EXACT URLs from the Pexels API response. '
-                        'Do NOT modify or create new URLs. Use the exact Original, Large, Medium, and Small '
-                        'URLs provided by the API for each selected photo.'
+                        'Do NOT modify or create new URLs. Use the exact Pexels page URL and Original photo URL '
+                        'provided by the API for each selected photo.'
                     ),
                     expected_output=(
-                        'A curated collection of 8-12 high-quality stock photos. For EACH photo include: '
-                        'Photo ID, the EXACT Original URL, EXACT Large URL, EXACT Medium URL, EXACT Small URL, '
-                        'photographer name, photographer profile URL, dimensions, Pexels page URL. '
-                        'Copy these URLs EXACTLY as provided by the Pexels API - do not modify them.'
+                        'A curated collection of the TOP 5 highest-quality stock photos. For EACH photo include: '
+                        'Photo description, Photo ID, photographer name with markdown link to profile, dimensions, '
+                        'Pexels page link, and Original download link, all formatted as markdown links. '
+                        'Preserve the EXACT markdown link format from the search results - do not modify the URLs.'
                     ),
                     agent=photo_curator
                 ),
                 Task(
                     description=(
-                        'Take the curated photo selection and format it into a clear, well-organized presentation. '
-                        'For each photo include: Photo ID, all size URLs (original, large, medium, small), '
-                        'photographer name and profile link, dimensions, and Pexels page URL. '
-                        '\n\nCRITICAL: Use the EXACT URLs provided by the curator. Copy and paste them EXACTLY '
-                        'as they are - do NOT modify, shorten, or create new URLs. These must be working links. '
+                        'Take the curated selection of 5 photos and format it into a clear, well-organized markdown presentation. '
+                        'For each photo include: Photo description (from the search results), Photo ID, photographer name as markdown link, '
+                        'dimensions, Pexels page as markdown link, and Original download link as markdown link. '
+                        '\n\nCRITICAL: Preserve the EXACT markdown link format from the curator. Copy and paste the markdown '
+                        'links EXACTLY as they are - do NOT modify, shorten, or recreate them. The format should be '
+                        '[Link Text](URL) for all links. '
                         '\n\nInclude a note about attribution requirements: "Photos provided by Pexels. '
                         'Please provide attribution by linking to the photographer\'s Pexels profile."'
                     ),
                     expected_output=(
-                        'A professionally formatted list of selected stock photos with complete download information. '
-                        'Each photo must include: number, title/description, Photo ID, EXACT clickable URLs '
-                        '(Original, Large, Medium, Small) copied verbatim from the curator, photographer name '
-                        'with profile link, dimensions, Pexels page URL, and attribution note. '
-                        'All URLs must be the EXACT ones provided - working, clickable links.'
+                        'A professionally formatted markdown list of the 5 selected stock photos with complete download information. '
+                        'Each photo must include: number, photo description, Photo ID, photographer name as markdown link, '
+                        'dimensions, Pexels page as markdown link, and Original download link as markdown link '
+                        'in the format [Link Text](URL). Copy the markdown links EXACTLY from the curator. '
+                        'Include attribution note at the end.'
                     ),
                     agent=results_formatter
                 )

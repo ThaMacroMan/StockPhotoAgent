@@ -65,25 +65,22 @@ class PexelsSearchTool(BaseTool):
             if not data.get("photos"):
                 return f"No photos found for query: '{query}'. Try different search terms."
             
-            # Format results
+            # Format results - concise format to reduce context size
             photos = data["photos"]
             total_results = data.get("total_results", 0)
             
             result = f"Found {total_results} photos for '{query}'. Showing top {len(photos)} results:\n\n"
             
             for i, photo in enumerate(photos, 1):
-                result += f"\n{i}. Photo ID: {photo['id']}\n"
-                result += f"   Photographer: {photo['photographer']}\n"
-                result += f"   Photographer Profile: {photo['photographer_url']}\n"
-                result += f"   Dimensions: {photo['width']}x{photo['height']}\n"
-                result += f"   Pexels Page: {photo['url']}\n"
-                result += f"   \n"
-                result += f"   === DOWNLOAD URLS (copy these exactly) ===\n"
-                result += f"   Original: {photo['src']['original']}\n"
-                result += f"   Large: {photo['src']['large']}\n"
-                result += f"   Medium: {photo['src']['medium']}\n"
-                result += f"   Small: {photo['src']['small']}\n"
-                result += f"   ==========================================\n"
+                # Include alt description for better selection decisions
+                alt_text = photo.get('alt', 'No description available')
+                # Concise format: Description, ID, photographer, dimensions, Pexels page, and Original URL
+                result += f"{i}. Description: {alt_text} | "
+                result += f"Photo ID: {photo['id']} | "
+                result += f"Photographer: [{photo['photographer']}]({photo['photographer_url']}) | "
+                result += f"{photo['width']}x{photo['height']} | "
+                result += f"[Pexels]({photo['url']}) | "
+                result += f"[Original]({photo['src']['original']})\n"
             
             return result
             
