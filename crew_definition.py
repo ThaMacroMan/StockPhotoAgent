@@ -128,26 +128,24 @@ class PhotoSearchCrew:
                 ),
                 Task(
                     description=(
-                        'Take the curated selection of 5 photos and format it into a clear, well-organized markdown presentation. '
-                        'For each photo include: BOTH markdown image syntax AND HTML img tag for the thumbnail using the Thumbnail URL from the search results. '
-                        'Format: ![Photo description](thumbnail_url) AND <img src="thumbnail_url" alt="Photo description" width="350" /> '
-                        'Then include: Photo description, Photo ID, photographer name as markdown link, '
-                        'dimensions, Pexels page as markdown link, and Original download link as markdown link. '
-                        '\n\nCRITICAL: Include BOTH formats for each image: '
-                        '1) Markdown: ![alt text](thumbnail_url) '
-                        '2) HTML: <img src="thumbnail_url" alt="alt text" width="350" /> '
-                        'Preserve the EXACT URLs from the curator - do NOT modify, shorten, or recreate them. '
+                        'Take the curated selection of 5 photos and format it into a compact, inline layout. '
+                        'For each photo, display a SINGLE thumbnail image (HTML format only) with all details inline on the same line. '
+                        'Format: <img src="thumbnail_url" alt="Photo description" width="200" style="vertical-align:middle; margin-right:10px;" /> '
+                        '**Description** | Photographer: [Name](url) | Dimensions: WxH | [Pexels](url) | [Original](url) '
+                        '\n\nCRITICAL FORMATTING RULES: '
+                        '1) Use ONLY HTML img tag (no markdown images) with width="200" for compact thumbnails '
+                        '2) Place image and details on the SAME LINE (inline layout) '
+                        '3) DO NOT include Photo ID - exclude it completely '
+                        '4) Use vertical-align:middle on the image so text aligns nicely '
+                        '5) Preserve the EXACT URLs from the curator - do NOT modify, shorten, or recreate them '
                         '\n\nInclude a note about attribution requirements: "Photos provided by Pexels. '
                         'Please provide attribution by linking to the photographer\'s Pexels profile."'
                     ),
                     expected_output=(
-                        'A professionally formatted markdown list of the 5 selected stock photos with image thumbnails in BOTH markdown and HTML formats. '
-                        'Each photo must include: '
-                        '1) Markdown image: ![description](thumbnail_url) '
-                        '2) HTML image: <img src="thumbnail_url" alt="description" width="350" /> '
-                        '3) Number, photo description, Photo ID, photographer name as markdown link, '
-                        'dimensions, Pexels page as markdown link, and Original download link as markdown link. '
-                        'Use the Thumbnail URL from the search results for both image formats. Copy all URLs EXACTLY from the curator. '
+                        'A compact, inline-formatted list of the 5 selected stock photos. Each photo on a single line: '
+                        '<img src="thumbnail_url" alt="description" width="200" style="vertical-align:middle; margin-right:10px;" /> '
+                        '**Description** | Photographer: [Name](url) | Dimensions: WxH | [Pexels](url) | [Original](url) '
+                        'NO Photo ID should be included. Use the Thumbnail URL from the search results. Copy all URLs EXACTLY from the curator. '
                         'Include attribution note at the end.'
                     ),
                     agent=results_formatter
